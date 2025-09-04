@@ -63,12 +63,9 @@ export class UserService {
             throw new BadRequestException(`User with uuid ${uuid} not found `);
         }
 
-        const updatedUser = await this.usersRepository.update(
-            user,
-            updateUserDto,
-        );
+        console.log(user);
 
-        return updatedUser;
+        return this.usersRepository.save({ ...user, ...updateUserDto });
     }
 
     public async remove(uuid: string) {

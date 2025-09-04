@@ -1,5 +1,7 @@
 import { AppModule } from './core/app.module';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { LastSeenInterceptor } from './interceptors/last-seen.interceptor';
+import { UserService } from './modules/user/user.service';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -11,6 +13,8 @@ async function bootstrap() {
     const logger = new Logger();
 
     const configService = app.get(ConfigService);
+    const userService = app.get(UserService);
+
     const config = {
         PORT: configService.getOrThrow<string>('PORT'),
         MODE: configService.getOrThrow<string>('NODE_ENV'),
@@ -30,6 +34,7 @@ async function bootstrap() {
 
     app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalInterceptors(new LastSeenInterceptor(userService));
 
     await app.listen(config.PORT, () => {
         logger.verbose(

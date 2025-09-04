@@ -35,6 +35,9 @@ export class User {
     @Column('int')
     public age: number;
 
+    @Column('timestamp with time zone', { default: new Date().toISOString() })
+    public lastSeenAt: Date;
+
     @CreateDateColumn()
     public createdAt: Date;
 
