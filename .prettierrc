@@ -9,5 +9,6 @@
     "bracketSpacing": true,
     "endOfLine": "lf",
     "prettier.requireConfig": true,
+    "importOrderParserPlugins": ["typescript", "decorators-legacy"],
     "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }
