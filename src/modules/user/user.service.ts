@@ -1,3 +1,4 @@
+import { StorageService } from './../../core/storage/storage.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -10,6 +11,7 @@ export class UserService {
     public constructor(
         @Inject('USER_REPOSITORY')
         private readonly usersRepository: Repository<User>,
+        private readonly StorageService: StorageService,
     ) {}
 
     public async create(createUserDto: CreateUserDto) {
@@ -80,5 +82,20 @@ export class UserService {
         await this.usersRepository.remove(user);
 
         return user;
+    }
+
+    public async uploadAvatar(uuid: string, file: Express.Multer.File) {
+        const result = await this.StorageService.uploadSingleFile({
+            file,
+            isPublic: false,
+        });
+
+        const user = await this.usersRepository.findOneBy({ uuid });
+
+        if (!user) {
+            throw new BadRequestException(`User with uuid ${uuid} not found `);
+        }
+
+        return this.usersRepository.save({ ...user, avatarUrl: result.url });
     }
 }

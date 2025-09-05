@@ -1,10 +1,10 @@
 import { OrmModule } from './orm/orm.module';
+import { StorageModule } from './storage/storage.module';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { UserModule } from '@/modules/user/user.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { StorageModule } from './storage/storage.module';
 
 @Module({
     imports: [
