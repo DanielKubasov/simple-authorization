@@ -4,6 +4,7 @@ import { UserModule } from '@/modules/user/user.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
         }),
         UserModule,
         AuthModule,
+        StorageModule,
     ],
     controllers: [],
     providers: [],

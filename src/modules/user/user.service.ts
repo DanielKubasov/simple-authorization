@@ -63,8 +63,6 @@ export class UserService {
             throw new BadRequestException(`User with uuid ${uuid} not found `);
         }
 
-        console.log(user);
-
         return this.usersRepository.save({ ...user, ...updateUserDto });
     }
 
